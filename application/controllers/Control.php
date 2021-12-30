@@ -295,7 +295,8 @@ class Control extends CI_Controller{
             $this->load->view('control/create_job_vacancy',$data);
             $this->load->view('templates/control/footer');
         }else{
-            $this->AcctionsModel->_CrateCompanyCREATEJOB();
+        
+            $this->AcctionsModel->_CrateCompanyCREATEJOB($_ID);
         }
         
     }

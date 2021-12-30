@@ -1084,7 +1084,7 @@ class AcctionsModel extends CI_Model
             redirect('app/control/company/'.$this->session->userdata('_id'));
         }
     }
-    function _CrateCompanyCREATEJOB(){
+    function _CrateCompanyCREATEJOB($ID){
         $DataCompany = $this->QueryModel->_CompanyProfileDataQueryOneWhere($this->input->post('company'));
         if($DataCompany){
             $upload_image = $_FILES['image']['name'];
@@ -1097,12 +1097,12 @@ class AcctionsModel extends CI_Model
                 $this->upload->initialize($config);
                 if ($this->upload->do_upload('image')) {
                     $data= [
-                        '_id' =>  $this->ltp->ltp_id(),
+                        '_id' =>  $ID,
                         'company_id' => $DataCompany['id_company'],
                         'title' => htmlspecialchars($this->input->post('title')),
                         'poster' =>htmlspecialchars($this->upload->data('file_name')),
                         'delivery_destination' =>htmlspecialchars($this->input->post('delivery_destination')),
-                        'date_create' => date('d m Y H:i:s'),
+                        'date_create' => date('d M Y H:i:s'),
                         'close_in'=>htmlspecialchars($this->input->post('close')),
                         'note' => $this->input->post('note'),
                         'job_vacancy_status'=> 'Show'
