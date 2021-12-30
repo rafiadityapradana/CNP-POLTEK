@@ -1216,6 +1216,7 @@ class AcctionsModel extends CI_Model
         redirect('app/control/activity-information/'.$this->session->userdata('_id'));
     }
     function _activityinfoUPDATE($ID_ACTIVITY){
+        
         $ACTIVITY = $this->QueryModel->_activityQUERYDATAOne($ID_ACTIVITY);
         if($ACTIVITY){
             $upload_image = $_FILES['image']['name'];
@@ -1229,13 +1230,13 @@ class AcctionsModel extends CI_Model
                 if ($this->upload->do_upload('image')) {
                     unlink(FCPATH . '/assets/public/images/aktifitas/' . $ACTIVITY['image']);
                     $file = htmlspecialchars($this->upload->data('file_name'));
+                    $this->db->set('image',$file);
                 }
             }
-            $data =[
-                'title' => htmlspecialchars($this->input->post('title')),
-                'image' => $file,
-                'desc_activity'=> htmlspecialchars($this->input->post('desc_activity')),
-            ];
+            $this->db->set('title',htmlspecialchars($this->input->post('title')));
+            $this->db->set('desc_activity',htmlspecialchars($this->input->post('desc_activity')));
+            $this->db->where('_id',$ID_ACTIVITY);
+            $this->db->update('activity');
         }else{
             $msg = $this->lang->line('data_Not_found');
             $color = 'text-danger';

@@ -366,6 +366,7 @@ class Control extends CI_Controller{
         $this->form_validation->set_rules('title', 'Title', 'trim|required');
         $this->form_validation->set_rules('desc_activity', 'Desc Activity', 'trim|required');
         if ($this->form_validation->run() == false){
+           
             $this->load->view('templates/control/header',$data);
             $this->load->view('control/aktivity_one',$data);
             $this->load->view('templates/control/footer');
