@@ -387,7 +387,7 @@ class Control extends CI_Controller{
             $this->load->view('control/aktivity_create',$data);
             $this->load->view('templates/control/footer');
         }else{
-            $this->AcctionsModel->_activityinfoCreate();
+            $this->AcctionsModel->_activityinfoCreate($_ID);
         }
     }
     public function langcreate($_ID){

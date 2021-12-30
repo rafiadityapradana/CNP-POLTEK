@@ -1244,24 +1244,27 @@ class AcctionsModel extends CI_Model
         $this->session->set_flashdata('msg', '<p class="'.$color.'">'.$msg.'</p>');
         redirect('app/control/activity-information/'.$this->session->userdata('_id'));
     }
-    function _activityinfoCreate(){
+    function _activityinfoCreate($_ID){
         $upload_image = $_FILES['image']['name'];
-        if($upload_image){
+        if($upload_image){ 
             $config['allowed_types'] = 'png|jpg|jpeg';
             $config['max_size']      = '10000';
             $config['file_name']     = $this->ltp->ltp_GenFILENAME();
-            $config['upload_path'] = 'assets/public/images/loker/';
+            $config['upload_path'] = 'assets/public/images/aktifitas/';
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
             if ($this->upload->do_upload('image')) {
+               
                 $data =[
+                    '_id'=>$_ID,
                     'title' => htmlspecialchars($this->input->post('title')),
                     'image' => htmlspecialchars($this->upload->data('file_name')),
                     'desc_activity'=> htmlspecialchars($this->input->post('desc_activity')),
-                    'date_upload' => date('d m Y')
+                    'date_upload' => date('d M Y')
                 ];
+                $this->db->insert('activity',$data);
                 $msg = $this->lang->line('cuccess_create_active');
-            $color = 'text-danger';
+            $color = 'text-success';
             }else{
                 $msg = $this->lang->line('ckeck_pdf_png');
                 $color = 'text-danger';
